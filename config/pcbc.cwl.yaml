@@ -1,0 +1,35 @@
+
+##################
+### GTEX
+
+class: Workflow
+cwlVersion: v1.0
+
+
+$namespaces:
+  bmeg: http://bmeg.io
+
+inputs:
+  PCBC_MATRIX:
+    type: File
+    bmeg:key: source/eXpress_tpm.csv
+    bmeg:url: syn://syn5006155
+
+steps:
+  pcbc-transform:
+    run: ../transform/rna-matrix/transform-rna-matrix.cwl
+    in:
+      matrix: PCPB_MATRIX
+    out:
+      - GeneExpression
+      - ExpressionOf
+
+outputs:
+  GeneExpression:
+    type: File
+    outputSource: pcbc-transform/GeneExpression
+    bmeg:key: biostream/pcbc/pcbc.GeneExpression.vertex.json
+  ExpressionOf:
+    type: File
+    outputSource: pcbc-transform/ExpressionOf
+    bmeg:key: biostream/pcbc/pcbc.ExpressionOf.edge.json
