@@ -13,7 +13,7 @@ from bmeg.emitter import JSONEmitter
 
 
 def matrix_parse(handle, emitter, args):
-    df = csv.reader(handle, delimiter="\t")
+    df = csv.reader(handle, delimiter=args.sep)
     samples = next(df)[1:]
     genes = []
     # write values out to temp matrix
@@ -33,6 +33,16 @@ def matrix_parse(handle, emitter, args):
         for g in genes:
             v = g.split(sep)
             o.append(v[pos])
+        genes = o
+    if args.gene_map is not None:
+        geneMap = {}
+        with open(args.gene_map, "rt") as handle:
+            for line in handle:
+                row = line.rstrip().split("\t")
+                geneMap[row[0]] = row[1]
+        o = []
+        for g in genes:
+            o.append(geneMap.get(g, g))
         genes = o
     print("genes:", genes)
 
@@ -72,6 +82,8 @@ if __name__ == "__main__":
     parser.add_argument("--method", default="Illumina HiSeq")
     parser.add_argument("--source", default="NA")
     parser.add_argument("--gene-label-split", default=None, nargs=2)
+    parser.add_argument("--gene-map", default=None)
+    parser.add_argument("--sep", default="\t")
     parser.add_argument("--gz", action="store_true", default=False)
 
     args = parser.parse_args()
