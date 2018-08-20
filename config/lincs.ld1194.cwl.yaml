@@ -1,0 +1,6 @@
+
+
+
+inputs:
+  bmeg:key: source/lincs/LDS-1194.tar.gz
+  bmeg:url: http://lincsportal.ccs.miami.edu/dcic/api/download?path=LINCS_Data/Broad_Therapeutics&file=LDS-1194.tar.gz

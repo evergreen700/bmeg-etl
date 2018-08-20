@@ -204,6 +204,7 @@ class PFAMFamily(Vertex):
 class ExpressionMetric(str, Enum):
     TPM = "TPM"
     RPKM = "RKPM"
+    LOG = "LOG"
 
 
 @enforce_types
