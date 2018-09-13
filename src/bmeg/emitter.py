@@ -3,12 +3,12 @@ import json
 import os
 import sys
 import typing
-
+import dataclasses
 from datetime import datetime
 
 from bmeg.edge import Edge
 from bmeg.gid import GID
-from bmeg.utils import enforce_types
+from bmeg.utils import enforce_types, ensure_directory
 from bmeg.vertex import Vertex
 
 
@@ -29,8 +29,8 @@ class DebugEmitter:
 
 
 class JSONEmitter:
-    def __init__(self, prefix, **kwargs):
-        self.handles = FileHandler(prefix, "json")
+    def __init__(self, directory, prefix=None, **kwargs):
+        self.handles = FileHandler(directory, prefix, "json")
         self.emitter = BaseEmitter(**kwargs)
 
     def close(self):
@@ -101,8 +101,9 @@ class BaseEmitter:
         self.rate.close()
 
     def _get_data(self, obj: typing.Union[Edge, Vertex]):
-        data = dict(obj.__dict__)
-
+        # this util recurses and unravels embedded dataclasses
+        # see https://docs.python.org/3/library/dataclasses.html#dataclasses.asdict
+        data = dataclasses.asdict(obj)
         # delete null values
         if not self.preserve_null:
             remove = [k for k in data if data[k] is None]
@@ -114,6 +115,7 @@ class BaseEmitter:
     @enforce_types
     def emit_edge(self, obj: Edge, from_gid: GID, to_gid: GID):
         dumped = {
+            "_id": obj.make_gid(from_gid, to_gid),
             "gid": obj.make_gid(from_gid, to_gid),
             "label": obj.label(),
             "from": from_gid,
@@ -127,6 +129,7 @@ class BaseEmitter:
     @enforce_types
     def emit_vertex(self, obj: Vertex):
         dumped = {
+            "_id": obj.gid(),
             "gid": obj.gid(),
             "label": obj.label(),
             "data": self._get_data(obj)
@@ -144,8 +147,11 @@ class FileHandler:
 
     This is an internal helper.
     """
-    def __init__(self, prefix, extension, mode="w"):
+    def __init__(self, directory, prefix, extension, mode="w"):
         self.prefix = prefix
+        self.directory = directory
+        ensure_directory("outputs", self.directory)
+        self.outdir = os.path.join("outputs", self.directory)
         self.extension = extension
         self.mode = mode
         self.handles = {}
@@ -161,7 +167,10 @@ class FileHandler:
         else:
             suffix = "Unknown"
 
-        fname = "%s.%s.%s.%s" % (self.prefix, label, suffix, self.extension)
+        fname = "%s.%s.%s" % (label, suffix, self.extension)
+        if self.prefix is not None:
+            fname = self.prefix + "." + fname
+        fname = os.path.join(self.outdir, fname)
 
         if fname in self.handles:
             return self.handles[fname]
@@ -173,3 +182,16 @@ class FileHandler:
     def close(self):
         for fh in self.handles.values():
             fh.close()
+
+
+# shorthand aliases for emitter names
+EMITTER_NAME_MAP = {
+    "json": JSONEmitter,
+    "debug": DebugEmitter,
+}
+
+
+def new_emitter(name="json", **kwargs):
+    """ construct an emitter """
+    cls = EMITTER_NAME_MAP[name]
+    return cls(**kwargs)

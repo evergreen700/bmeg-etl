@@ -1,8 +1,19 @@
+import os
 import inspect
 import typing
-
+import threading
 from contextlib import suppress
 from functools import wraps
+
+
+def ensure_directory(*args):
+    path = os.path.join(*args)
+    if os.path.isfile(path):
+        raise Exception(
+            "Emitter output directory %s is a regular file", path)
+
+    if not os.path.exists(path):
+        os.makedirs(path)
 
 
 def enforce_types(callable):
@@ -15,6 +26,12 @@ def enforce_types(callable):
     def check_types(*args, **kwargs):
         parameters = dict(zip(spec.args, args))
         parameters.update(kwargs)
+        # allow thread to control if check skipped
+        try:
+            if threading.local().skip_check_types:
+                return
+        except AttributeError:
+            pass
         for name, value in parameters.items():
             # Assume un-annotated parameters can be any type
             with suppress(KeyError):
