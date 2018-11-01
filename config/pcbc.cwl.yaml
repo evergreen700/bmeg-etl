@@ -1,6 +1,6 @@
 
 ##################
-### GTEX
+### PCBC
 
 class: Workflow
 cwlVersion: v1.0
