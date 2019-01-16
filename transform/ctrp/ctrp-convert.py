@@ -42,17 +42,14 @@ for i, row in response_df.iterrows():
     auc = row['area_under_curve']
     ec50 = row['apparent_ec50_umol']
 
-    #curve_sub = curve_df.loc[ (curve_df["experiment_id"] == exp_id) & (curve_df["master_cpd_id"] == cpd_id) ]
-    curve_sub = curve_df.loc[ (exp_id, cpd_id) ]
+    # curve_sub = curve_df.loc[ (curve_df["experiment_id"] == exp_id) & (curve_df["master_cpd_id"] == cpd_id) ]
+    curve_sub = curve_df.loc[(exp_id, cpd_id)]
     conc = curve_sub["cpd_conc_umol"]
     resp = curve_sub["cpd_avg_pv"]
 
     dr = DrugResponse(sample_id=ccl_name, compound_id=cpd_name, source="CTRP",
                       act_area=auc, ec50=ec50, doses_um=list(conc),
-                      activity_data_median=list(resp)
-    )
+                      activity_data_median=list(resp))
     emitter.emit_vertex(dr)
-    
-
 
 emitter.close()

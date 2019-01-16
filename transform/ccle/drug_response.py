@@ -1,22 +1,21 @@
 """ match drug response data to aliquot """
 
-import logging
 import glob
 import ujson
 from types import SimpleNamespace as SN
 
 import bmeg.ioutils
 from bmeg.emitter import JSONEmitter
-from bmeg.vertex import DrugResponse, Aliquot, Biosample, Individual, Project
-from bmeg.edge import ResponseIn, ResponseTo #, AliquotFor, BiosampleFor, InProject
+from bmeg.vertex import DrugResponse, Aliquot  # , Biosample, Individual, Project
+from bmeg.edge import ResponseIn, ResponseTo  # , AliquotFor, BiosampleFor, InProject
 from bmeg.enrichers.drug_enricher import compound_factory
 
 
 NAMES = {
     'CCLE Cell Line Name': 'sample_id',
-    #'Primary Cell Line Name': 'primary_cell_line_name',
+    # 'Primary Cell Line Name': 'primary_cell_line_name',
     'Compound': 'compound_id',
-    #'Target': 'target',
+    # 'Target': 'target',
     'Doses (uM)': 'doses_um',
     'Activity Data (median)': 'activity_data_median',
     'Activity SD': 'activity_sd',
@@ -53,14 +52,13 @@ def transform(biosample_path='outputs/ccle/Biosample.Vertex.json*',
     # input and map
     input_stream = bmeg.ioutils.read_csv(drug_response_path)
     floats = ['amax', 'act_area', 'ec50', 'ic50', 'num_data']
-    missing_cell_lines = []
     compound_gids = []
     # read the drug response csv
     for line in input_stream:
         # map the names to snake case
-        mline = {"source" : "CCLE"}
+        mline = {"source": "CCLE"}
         for k, v in NAMES.items():
-            #line[v] = line.pop(k)
+            # line[v] = line.pop(k)
             # csv field to float array
             if ',' in line[k]:
                 mline[v] = [float(s) for s in line[k].split(',')]

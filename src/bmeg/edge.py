@@ -223,6 +223,7 @@ class ResponseIn(Edge):
     """
     pass
 
+
 @enforce_types
 @dataclass(frozen=True)
 class ResponseTo(Edge):
@@ -230,7 +231,6 @@ class ResponseTo(Edge):
     DrugResponse -> Compound
     """
     pass
-
 
 
 @enforce_types

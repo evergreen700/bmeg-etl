@@ -378,7 +378,6 @@ class DrugResponse(Vertex):
     amax: Union[None, float] = None
     act_area: Union[None, float] = None
 
-
     def gid(self):
         return DrugResponse.make_gid(self.source, self.sample_id, self.compound_id)
 

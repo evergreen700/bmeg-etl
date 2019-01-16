@@ -2,7 +2,7 @@ import re
 
 import bmeg.ioutils
 from bmeg.emitter import JSONEmitter
-from bmeg.vertex import Aliquot, DrugResponse, DrugResponseMetric
+from bmeg.vertex import Aliquot, DrugResponse
 from bmeg.edge import ResponseIn, ResponseTo
 from bmeg.util.logging import default_logging
 from bmeg.util.cli import default_argument_parser
