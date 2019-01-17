@@ -35,9 +35,9 @@ def validate(helpers, emitter_directory, biosample_path, drug_response_path):
               drug_response_path=drug_response_path,
               emitter_directory=emitter_directory)
     # ratify
-    helpers.assert_vertex_file_valid(ParamacalogicalProfile, profile_file)
-    helpers.assert_edge_file_valid(ParamacalogicalProfile, Aliquot, profile_in_file)
-    helpers.assert_edge_file_valid(ParamacalogicalProfile, Compound, response_to_file)
+    helpers.assert_vertex_file_valid(DrugResponse, profile_file)
+    helpers.assert_edge_file_valid(DrugResponse, Aliquot, profile_in_file)
+    helpers.assert_edge_file_valid(DrugResponse, Compound, response_to_file)
     helpers.assert_vertex_file_valid(Compound, compound_file)
     helpers.assert_edge_joins_valid(all_files, exclude_labels=['Aliquot'])
     # missing vertexes
