@@ -225,8 +225,6 @@ class TranscriptExpressionOf(Edge):
 
 
 @enforce_types
-
-
 @dataclass(frozen=True)
 class ResponseIn(Edge):
     """
