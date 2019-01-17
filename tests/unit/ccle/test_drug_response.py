@@ -3,7 +3,7 @@ import os
 import pytest
 import contextlib
 from transform.ccle.drug_response import transform
-from bmeg.vertex import ParamacalogicalProfile, Aliquot, Compound, Biosample, Individual, Project
+from bmeg.vertex import DrugResponse, Aliquot, Compound, Biosample, Individual, Project
 
 
 @pytest.fixture
@@ -20,8 +20,8 @@ def biosample_path(request):
 
 def validate(helpers, emitter_directory, biosample_path, drug_response_path):
     """ run xform and test results"""
-    profile_file = os.path.join(emitter_directory, 'drug_response.ParamacalogicalProfile.Vertex.json.gz')
-    profile_in_file = os.path.join(emitter_directory, 'drug_response.ParamacalogicalProfileIn.Edge.json.gz')
+    profile_file = os.path.join(emitter_directory, 'drug_response.DrugResponse.Vertex.json.gz')
+    profile_in_file = os.path.join(emitter_directory, 'drug_response.ResponseIn.Edge.json.gz')
     response_to_file = os.path.join(emitter_directory, 'drug_response.ResponseTo.Edge.json.gz')
     compound_file = os.path.join(emitter_directory, 'drug_response.Compound.Vertex.json.gz')
 
