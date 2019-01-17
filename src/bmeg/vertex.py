@@ -88,22 +88,20 @@ class Allele(Vertex):
 
 @enforce_types
 @dataclass(frozen=True)
-class MethylationProbe(Vertex):
+class CNASegment(Vertex):
     genome: str
     chromosome: str
     start: int
     end: int
-    probe_id: str
 
     def gid(self):
-        return MethylationProbe.make_gid(self.genome, self.chromosome,
-                                         self.start, self.end,
-                                         self.probe_id)
+        return CNASegment.make_gid(self.genome, self.chromosome,
+                                   self.start, self.end)
 
     @classmethod
-    def make_gid(cls, genome, chromosome, start, end, probe_id):
-        return GID("%s:%s:%d:%d:%s" % (cls.__name__, genome, start, end,
-                                       probe_id))
+    def make_gid(cls, callset_id, genome, chromosome, start, end):
+        return GID("%s:%s:%s:%d:%d" % (cls.__name__, callset_id, genome, start,
+                                       end))
 
 
 @enforce_types
@@ -158,7 +156,7 @@ class Transcript(Vertex):
 @dataclass(frozen=True)
 class Exon(Vertex):
     exon_id: str
-    transcript_id: str
+    transcript_id: list
     chromosome: str
     start: int
     end: int
@@ -190,7 +188,7 @@ class Protein(Vertex):
     def make_gid(cls, protein_id):
         if not protein_id.startswith("ENSP"):
             raise ValueError("not an emsembl protein id")
-        if protein_id.count(".") == 0:
+        if protein_id.count(".") != 0:
             raise ValueError("version numbers not allowed")
         return GID("%s" % (protein_id))
 
@@ -242,6 +240,30 @@ class Expression(Vertex):
 
     def gid(self):
         return Expression.make_gid(self.source, self.id)
+
+    @classmethod
+    def make_gid(cls, source, id):
+        return GID("%s:%s:%s" % (cls.__name__, source, id))
+
+
+@enforce_types
+@dataclass(frozen=True)
+class TranscriptExpression(Expression):
+
+    def gid(self):
+        return TranscriptExpression.make_gid(self.source, self.id)
+
+    @classmethod
+    def make_gid(cls, source, id):
+        return GID("%s:%s:%s" % (cls.__name__, source, id))
+
+
+@enforce_types
+@dataclass(frozen=True)
+class GeneExpression(Expression):
+
+    def gid(self):
+        return GeneExpression.make_gid(self.source, self.id)
 
     @classmethod
     def make_gid(cls, source, id):
@@ -566,3 +588,36 @@ class CopyNumberAlteration(Vertex):
     @classmethod
     def make_gid(cls, source, id):
         return GID("%s:%s:%s" % (cls.__name__, source, id))
+
+
+@enforce_types
+@dataclass(frozen=True)
+class Methylation(Vertex):
+    id: str
+    source: str
+    metric: str
+    method: str
+    values: dict
+
+    def gid(self):
+        return Methylation.make_gid(self.source, self.id)
+
+    @classmethod
+    def make_gid(cls, source, id):
+        return GID("%s:%s:%s" % (cls.__name__, source, id))
+
+
+@enforce_types
+@dataclass(frozen=True)
+class MethylationProbe(Vertex):
+    id: str
+    target: Union[None, str]
+    chromosome: str
+    position: int
+
+    def gid(self):
+        return MethylationProbe.make_gid(self.id)
+
+    @classmethod
+    def make_gid(cls, id):
+        return GID("%s:%s" % (cls.__name__, id))

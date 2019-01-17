@@ -17,7 +17,7 @@ class Helpers:
             # skip if union(None, ...)
             if 'typing.Union' in str(field.type) and 'NoneType' in str(field.type):
                 continue
-            assert vertex_dict['data'][k], 'empty key %s' % k
+            assert vertex_dict['data'][k] is not None, 'empty key %s' % k
 
     @staticmethod
     def assert_vertex_keys_populated(vertex_dict):
@@ -120,6 +120,8 @@ class Helpers:
         tos = [edges[gid]['to'] for gid in edges.keys()]
         for vertex_gid in vertices.keys():
             label = vertex_gid.split(':')[0]
+            if label in exclude_labels:
+                continue
             if label == 'Deadletter':
                 continue
             assert vertex_gid in froms or vertex_gid in tos, 'could not find {} in edge'.format(vertex_gid)

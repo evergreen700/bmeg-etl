@@ -72,16 +72,16 @@ class AlleleCall(Edge):
 
 @enforce_types
 @dataclass(frozen=True)
-class MethlyationProbeValue(Edge):
+class MethylationOf(Edge):
     """
-    MethylationProbe -> Callset
+    Methylation -> Aliquot
     """
-    value: float
+    pass
 
 
 @enforce_types
 @dataclass(frozen=True)
-class MethlyationProbeFor(Edge):
+class MethylationProbeFor(Edge):
     """
     MethylationProbe -> Gene
     """
@@ -208,7 +208,7 @@ class AliquotFor(Edge):
 
 @enforce_types
 @dataclass(frozen=True)
-class ExpressionOf(Edge):
+class GeneExpressionOf(Edge):
     """
     GeneExpression -> Aliquot
     """
@@ -216,6 +216,17 @@ class ExpressionOf(Edge):
 
 
 @enforce_types
+@dataclass(frozen=True)
+class TranscriptExpressionOf(Edge):
+    """
+    TranscriptExpression -> Aliquot
+    """
+    pass
+
+
+@enforce_types
+
+
 @dataclass(frozen=True)
 class ResponseIn(Edge):
     """
