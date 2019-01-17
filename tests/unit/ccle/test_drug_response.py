@@ -3,7 +3,7 @@ import os
 import pytest
 import contextlib
 from transform.ccle.drug_response import transform
-from bmeg.vertex import DrugResponse, Aliquot, Compound, Biosample, Individual, Project
+from bmeg.vertex import DrugResponse, Aliquot, Compound  # , Biosample, Individual, Project
 
 
 @pytest.fixture
