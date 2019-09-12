@@ -111,7 +111,7 @@ outs:
 File Manifest Generation
 ------
 
-To generate [bmeg_file_manifest.txt](scripts/bmeg_file_manifest.txt) run `python scripts/generate_bmeg_file_manifest.py`.
+To generate [bmeg_file_manifest.txt](bmeg_file_manifest.txt) run `python scripts/generate_bmeg_file_manifest.py`.
 
 GRIP Schema Generation
 ------

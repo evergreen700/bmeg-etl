@@ -16,10 +16,10 @@ for f in $(cat $file_manifest); do
 		fi
 done
 
-grip drop $graph
-grip create $graph
+grip drop $graph --host grip:8202
+grip create $graph --host grip:8202
 
-gofast="--numInsertionWorkers 8 --writeConcern 0 --bypassDocumentValidation"
+gofast="--numInsertionWorkers 24 --writeConcern 0 --bypassDocumentValidation --host=mongo"
 
 for f in $(cat $file_manifest | grep "Vertex"); do
 		if [[ $f =~ \.gz$ ]]; then
