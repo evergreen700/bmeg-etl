@@ -16,7 +16,7 @@ links:
     - outbound
     multiplicity:
     - has_one
-    association: true
+    backref: gene
 - rel: ensembl_transcript
   href: ensembltranscript/{id}
   templateRequired:
@@ -30,7 +30,7 @@ links:
     - outbound
     multiplicity:
     - has_one
-    association: true
+    backref: transcript
 properties:
   id:
     type: string

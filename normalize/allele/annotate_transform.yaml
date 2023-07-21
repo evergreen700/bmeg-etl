@@ -87,7 +87,8 @@ pipelines:
             o = []
             for i in row["effects"]:
               o.append( {"id" : i["id"]} )
-            row["effects"] = o
+            if o:
+              row["effects"] = o
             return row
     - objectValidate:
         schema: "{{config.schema}}"
@@ -106,4 +107,4 @@ pipelines:
         schema: "{{config.schema}}"
         title: AlleleEffect
     - emit:
-        name: alleleEffect
+        name: AlleleEffect

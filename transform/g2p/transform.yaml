@@ -89,7 +89,8 @@ pipelines:
                       }
                   if o is not None:
                     a.append(o)
-            row["alleles"] = a
+            if a:
+              row["alleles"] = a
             return row
     - project:
         mapping:
