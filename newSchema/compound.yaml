@@ -93,6 +93,10 @@ properties:
     - array
   similar_compounds:
     type:
+    - 'null'
+    - array
+  projects:
+    type:
     - array
     items:
       $ref: reference.yaml
@@ -108,8 +112,3 @@ properties:
     $ref: _definitions.yaml#/datetime
   updated_datetime:
     $ref: _definitions.yaml#/datetime
-  projects:
-    type:
-    - array
-    items:
-      $ref: reference.yaml

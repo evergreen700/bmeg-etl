@@ -23,12 +23,22 @@ properties:
     type: integer
   cdna_length:
     type: integer
+  exon_rank:
+    type: string
   hgnc_id:
     type: string
   hgvsc:
     type: string
   hgvsp:
     type: string
+  uniprot_domain:
+    type: string
+  uniprot_location:
+    type: string
+  num_transcripts:
+    type: number
+  percent_transcripts_affected:
+    type: number
   ensembl_gene:
     targets:
       - type:

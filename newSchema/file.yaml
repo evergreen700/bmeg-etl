@@ -10,21 +10,7 @@ required:
 - project_id
 - md5
 - filename
-links:
-- rel: aliquots
-  href: aliquot/{id}
-  templateRequired:
-  - id
-  targetSchema:
-    $ref: aliquot.yaml
-  templatePointers:
-    id: /aliquots/-/id
-  targetHints:
-    directionality:
-    - outbound
-    multiplicity:
-    - has_one
-    backref: files
+links: []
 properties:
   id:
     $ref: _definitions.yaml#/UUID
@@ -49,8 +35,3 @@ properties:
     $ref: _definitions.yaml#/datetime
   updated_datetime:
     $ref: _definitions.yaml#/datetime
-  aliquots:
-    type:
-    - array
-    items:
-      $ref: reference.yaml

@@ -10,20 +10,6 @@ required:
 - submitter_id
 - project_id
 links:
-- rel: compounds
-  href: compound/{id}
-  templateRequired:
-  - id
-  targetSchema:
-    $ref: compound.yaml
-  templatePointers:
-    id: /compounds/-/id
-  targetHints:
-    directionality:
-    - outbound
-    multiplicity:
-    - has_many
-    backref: drug_responses
 - rel: aliquot
   href: aliquot/{id}
   templateRequired:
@@ -38,6 +24,20 @@ links:
     multiplicity:
     - has_one
     backref: drug_response
+- rel: compounds
+  href: compound/{id}
+  templateRequired:
+  - id
+  targetSchema:
+    $ref: compound.yaml
+  templatePointers:
+    id: /compounds/-/id
+  targetHints:
+    directionality:
+    - outbound
+    multiplicity:
+    - has_many
+    backref: drug_responses
 properties:
   id:
     type: string
@@ -125,6 +125,16 @@ properties:
     type: string
   source_cell_name:
     type: string
+  aliquot:
+    type:
+    - array
+    items:
+      $ref: reference.yaml
+  compounds:
+    type:
+    - array
+    items:
+      $ref: reference.yaml
   project_id:
     $ref: _definitions.yaml#/project_id
   submitter_id:
@@ -137,13 +147,3 @@ properties:
     $ref: _definitions.yaml#/datetime
   updated_datetime:
     $ref: _definitions.yaml#/datetime
-  compounds:
-    type:
-    - array
-    items:
-      $ref: reference.yaml
-  aliquot:
-    type:
-    - array
-    items:
-      $ref: reference.yaml

@@ -122,24 +122,12 @@ properties:
     type:
     - 'null'
     - string
-  project_id:
-    $ref: _definitions.yaml#/project_id
-  submitter_id:
-    type:
-    - string
-    - 'null'
-  type:
-    type: string
-  created_datetime:
-    $ref: _definitions.yaml#/datetime
-  updated_datetime:
-    $ref: _definitions.yaml#/datetime
-  compounds:
+  alleles:
     type:
     - array
     items:
       $ref: reference.yaml
-  alleles:
+  compounds:
     type:
     - array
     items:
@@ -154,13 +142,25 @@ properties:
     - array
     items:
       $ref: reference.yaml
-  publications:
-    type:
-    - array
-    items:
-      $ref: reference.yaml
   phenotypes:
     type:
     - array
     items:
       $ref: reference.yaml
+  publications:
+    type:
+    - array
+    items:
+      $ref: reference.yaml
+  project_id:
+    $ref: _definitions.yaml#/project_id
+  submitter_id:
+    type:
+    - string
+    - 'null'
+  type:
+    type: string
+  created_datetime:
+    $ref: _definitions.yaml#/datetime
+  updated_datetime:
+    $ref: _definitions.yaml#/datetime
