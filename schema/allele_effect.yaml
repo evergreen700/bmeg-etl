@@ -15,6 +15,10 @@ properties:
     type: integer
   aa_length:
     type: integer
+  aa_ref:
+    type: string
+  aa_var:
+    type: string
   cds_position:
     type: integer
   cds_length:

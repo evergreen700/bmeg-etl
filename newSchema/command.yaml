@@ -12,20 +12,6 @@ required:
 - cmd
 - filename
 links:
-- rel: reads
-  href: file/{id}
-  templateRequired:
-  - id
-  targetSchema:
-    $ref: file.yaml
-  templatePointers:
-    id: /reads/-/id
-  targetHints:
-    directionality:
-    - outbound
-    multiplicity:
-    - has_many
-    backref: commands
 - rel: writes
   href: file/{id}
   templateRequired:
@@ -47,16 +33,6 @@ properties:
     type: string
   filename:
     type: string
-  reads:
-    type:
-    - array
-    items:
-      $ref: reference.yaml
-  writes:
-    type:
-    - array
-    items:
-      $ref: reference.yaml
   project_id:
     $ref: _definitions.yaml#/project_id
   submitter_id:
@@ -72,3 +48,8 @@ properties:
     $ref: _definitions.yaml#/datetime
   updated_datetime:
     $ref: _definitions.yaml#/datetime
+  writes:
+    type:
+    - array
+    items:
+      $ref: reference.yaml
