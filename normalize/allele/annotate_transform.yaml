@@ -53,48 +53,34 @@ pipelines:
                   for n, i in enumerate(a):
                     b = dict(zip(ANN_header, i.split("|")))
                     b["impact"] = b["Annotation_Impact"]
-                    b["annotation"] =  b["Feature_Type"][7:]
-                    if b['Feature_Type'] == 'CUSTOM&unipDomain':
-                      b['uniprot_domain'] = b['Feature_ID']
-                    elif b['Feature_Type'] == 'CUSTOM&unipLocCytopl':
-                      b['uniprot_location'] = b['Feature_ID']
-                    elif b['Feature_Type'] == 'CUSTOM&unipLocExtra':
-                      b['uniprot_location'] = b['Feature_ID']
-                    elif b['Feature_Type'] == 'CUSTOM&unipLocTransMemb':
-                      b['uniprot_location'] = b['Feature_ID']
-                    elif b['Feature_Type'] == 'CUSTOM&unipLocSignal':
-                      b['uniprot_location'] = b['Feature_ID']
-                    elif b['Feature_Type'] == 'CUSTOM&unipSplice':
-                      b['uniprot_location'] = b['Feature_ID']
-                    else:
-                      b["annotation"] =  b["Annotation"]
-                      b["hgvsc"] = b["HGVS.c"]
-                      b["hgvsp"] = b["HGVS.p"]
-                      if len(b['hgvsp']):
-                        b['aa_ref'] = b['hgvsp'][2:5]
-                        b['aa_var'] = b['hgvsp'][-3:]
-                      b["biotype"] = b["Transcript_BioType"]
-                      b["hugo_symbol"] = b["Gene_Name"]
-                      b["ensembl_gene"] = b["Gene_ID"]
-                      if b["Feature_Type"] == "transcript":
-                        b["ensembl_transcript"] = b["Feature_ID"].split(".")[0]
-                      if len(b['Rank']):
-                        b['exon_rank'] = b['Rank']
-                      aa = b["AA.pos / AA.length"]
-                      if len(aa):
-                        aa_pos, aa_len = aa.split("/")
-                        b["aa_position"] = int(aa_pos)
-                        b["aa_length"] = int(aa_len)
-                      cds = b["CDS.pos / CDS.length"]
-                      if len(cds):
-                        cds_pos, cds_len = cds.split("/")
-                        b["cds_position"] = int(cds_pos)
-                        b["cds_length"] = int(cds_len)
-                      cdna = b["cDNA.pos / cDNA.length"]
-                      if len(cdna):
-                        cdna_pos, cdna_len = cdna.split("/")
-                        b["cdna_position"] = int(cdna_pos)
-                        b["cdna_length"] = int(cdna_len)
+                    b["annotation"] =  b["Annotation"]
+                    b["hgvsc"] = b["HGVS.c"]
+                    b["hgvsp"] = b["HGVS.p"]
+                    if len(b['hgvsp']):
+                      b['aa_ref'] = b['hgvsp'][2:5]
+                      b['aa_var'] = b['hgvsp'][-3:]
+                    b["biotype"] = b["Transcript_BioType"]
+                    b["hugo_symbol"] = b["Gene_Name"]
+                    b["ensembl_gene"] = b["Gene_ID"]
+                    if b["Feature_Type"] == "transcript":
+                      b["ensembl_transcript"] = b["Feature_ID"].split(".")[0]
+                    if len(b['Rank']):
+                      b['exon_rank'] = b['Rank']
+                    aa = b["AA.pos / AA.length"]
+                    if len(aa):
+                      aa_pos, aa_len = aa.split("/")
+                      b["aa_position"] = int(aa_pos)
+                      b["aa_length"] = int(aa_len)
+                    cds = b["CDS.pos / CDS.length"]
+                    if len(cds):
+                      cds_pos, cds_len = cds.split("/")
+                      b["cds_position"] = int(cds_pos)
+                      b["cds_length"] = int(cds_len)
+                    cdna = b["cDNA.pos / cDNA.length"]
+                    if len(cdna):
+                      cdna_pos, cdna_len = cdna.split("/")
+                      b["cdna_position"] = int(cdna_pos)
+                      b["cdna_length"] = int(cdna_len)
                     b["id"] = row["id"] + "/ANN/" + str(n)
                     o.append(b)
                 elif t[0] in ['NMD', 'LOF']:
@@ -136,8 +122,8 @@ pipelines:
         gpython: |
           def fix(row):
             return row["effects"]
-    - objectValidate:
-        schema: "{{config.schema}}"
-        title: AlleleEffect
+#    - objectValidate:
+#        schema: "{{config.schema}}"
+#        title: AlleleEffect
     - emit:
         name: AlleleEffect

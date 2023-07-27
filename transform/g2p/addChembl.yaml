@@ -51,4 +51,4 @@ pipelines:
         schema: "{{config.schema}}"
 
     - emit:
-        name: Allele
+        name: allele

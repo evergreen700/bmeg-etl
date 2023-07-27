@@ -33,19 +33,19 @@ pipelines:
             ensembl_pseq = []
             for i in force_list(row['dbReference']):
               if i['-type'] == 'Ensembl':
-                ensembl_transcript.append( {"id" : i["-id"].split(".")[0]} )
+                ensembl_transcript.append(i["-id"].split(".")[0])
                 for p in force_list(i["property"]):
                   if p["-value"].startswith("ENSG"):
-                    ensembl_gene.append( {"id" : p["-value"].split(".")[0]} )
+                    ensembl_gene.append(p["-value"].split(".")[0])
                   elif p['-value'].startswith('ENSP'):
                     ensembl_pseq.append( p["-value"].split(".")[0])
             o = []
-            if 'feature' in row:
+            if 'feature' in row and len(ensembl_transcript) > 0:
               for f in force_list(row['feature']):
-                c = {'gene': ensembl_gene[0:1], 'transcript': ensembl_transcript[0:1], 'sequence_id': ensembl_pseq} 
+                c = {'transcript': ensembl_transcript[0]} #, 'sequence_id': ensembl_pseq} 
                 description = f['-type']
                 if '-description' in f:
-                  c[description] = f['-description']
+                  c[description.replace('-', '_').replace(' ', '_')] = f['-description']
                 else:
                   c['structure'] = description
                 if 'location' in f:

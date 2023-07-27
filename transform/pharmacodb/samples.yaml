@@ -19,8 +19,6 @@ inputs:
 pipelines:
   transform:
     - from: sampleReader
-    - emit:
-        name: debug
     - map:
         method: checkDepmap
         gpython: |
