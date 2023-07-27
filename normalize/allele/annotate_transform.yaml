@@ -53,7 +53,7 @@ pipelines:
                   for n, i in enumerate(a):
                     b = dict(zip(ANN_header, i.split("|")))
                     b["impact"] = b["Annotation_Impact"]
-                    b["annotation"] =  b["Annotation"]
+                    b["annotation"] =  b["Feature_Type"][7:]
                     if b['Feature_Type'] == 'CUSTOM&unipDomain':
                       b['uniprot_domain'] = b['Feature_ID']
                     elif b['Feature_Type'] == 'CUSTOM&unipLocCytopl':
@@ -64,7 +64,10 @@ pipelines:
                       b['uniprot_location'] = b['Feature_ID']
                     elif b['Feature_Type'] == 'CUSTOM&unipLocSignal':
                       b['uniprot_location'] = b['Feature_ID']
+                    elif b['Feature_Type'] == 'CUSTOM&unipSplice':
+                      b['uniprot_location'] = b['Feature_ID']
                     else:
+                      b["annotation"] =  b["Annotation"]
                       b["hgvsc"] = b["HGVS.c"]
                       b["hgvsp"] = b["HGVS.p"]
                       if len(b['hgvsp']):
@@ -118,7 +121,8 @@ pipelines:
               o.append( {"id" : i["id"]} )
             if o:
               row["effects"] = o
-            return row
+            newRow = {k:v for k,v in row.items() if v is not None and v != []}
+            return newRow
     - objectValidate:
         schema: "{{config.schema}}"
         title: Allele

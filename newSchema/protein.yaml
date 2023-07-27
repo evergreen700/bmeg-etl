@@ -23,7 +23,7 @@ links:
     - outbound
     multiplicity:
     - has_one
-    backref: gene
+    backref: proteins
 - rel: transcript
   href: transcript/{id}
   templateRequired:

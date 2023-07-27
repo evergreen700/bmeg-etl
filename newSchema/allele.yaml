@@ -23,7 +23,7 @@ links:
     - outbound
     multiplicity:
     - has_one
-    backref: gene
+    backref: alleles
 - rel: effects
   href: effect/{id}
   templateRequired:
@@ -51,7 +51,7 @@ links:
     - outbound
     multiplicity:
     - has_one
-    backref: transcript
+    backref: alleles
 - rel: protein
   href: protein/{id}
   templateRequired:

@@ -111,7 +111,7 @@ def yaml_dir(input_path, output_path, include_links):
                         if 'targets' in schema['properties'][p] and 'backref' in schema['properties'][p]['targets'][0]:
                           new_link['targetHints']['backref'] = schema['properties'][p]['targets'][0]['backref']
                         else:
-                          new_link['targetHints']['backref'] = new_link['targetSchema']['$ref'].split('.')[0]
+                          new_link['targetHints']['backref'] = schema['id']+'s'
                       if 'targets' in schema['properties'][p]:
                         priority += 1
                       if '$ref' in schema["properties"][p] and schema['properties'][p]['$ref'].endswith('one'):

@@ -16,7 +16,7 @@ links:
     - outbound
     multiplicity:
     - has_one
-    backref: gene
+    backref: allele_effects
 - rel: ensembl_transcript
   href: ensembltranscript/{id}
   templateRequired:
@@ -30,7 +30,7 @@ links:
     - outbound
     multiplicity:
     - has_one
-    backref: transcript
+    backref: allele_effects
 properties:
   id:
     type: string
