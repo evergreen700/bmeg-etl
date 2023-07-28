@@ -6,7 +6,6 @@ outdir: ../../output/allele
 
 config:
   AEPath: ../../output/allele/annotatedAllele.alleleEffect.AlleleEffect.json.gz 
-#  AEPath: testVar.json
   uniprotFeatures: ../../tables/uniprot_features.features.final.json.gz
   schema: ../../schema/
 
@@ -22,8 +21,8 @@ pipelines:
         method: fix
         gpython: |
           def fix(row):
-            if 'ensembl_transcipt' in row:
-              row['ensembl_transript'] = [{'id': row['ensembl_transript']}]
+            if 'ensembl_transcript' in row:
+              row['ensembl_transcript'] = [{'id': row['ensembl_transcript']}]
             if 'ensembl_gene' in row:
               row['ensembl_gene'] = [{'id': row['ensembl_gene']}]
             return row
